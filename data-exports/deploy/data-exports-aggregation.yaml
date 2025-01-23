@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: AWS Billing Data Export Aggregation v0.1.5
+Description: AWS Billing Data Export Aggregation v0.1.6
 Metadata:
 
   AWS::CloudFormation::Interface:
@@ -808,6 +808,10 @@ Resources:
               Resource: !Sub "arn:${AWS::Partition}:bcm-data-exports:*:${AWS::AccountId}:*"
             - Effect: Allow
               Action:
+              - bcm-data-exports:ListExports
+              Resource: !Sub "arn:${AWS::Partition}:bcm-data-exports:*:${AWS::AccountId}:*"
+            - Effect: Allow
+              Action:
               - cur:PutReportDefinition  #need this permission for bcm-data-exports to work
               Resource: !Sub "arn:${AWS::Partition}:cur:*:${AWS::AccountId}:*"
             - Effect: Allow
@@ -847,30 +851,40 @@ Resources:
 
             try:
               export = event['ResourceProperties']['Export']
-              export_name = event['ResourceProperties']['Export']['Name']
-
+              old_export = event.get('OldResourceProperties', {}).get('Export')
               if event['RequestType'] == 'Create':
                   res = client.create_export(Export=export)
                   print('created:', json.dumps(res))
               elif event['RequestType'] == 'Update':
-                  old_export_name = event['OldResourceProperties']['Export']['Name']
-                  if export["Name"] != old_export_name:
+                  old_export_name = old_export['Name']
+                  old_export_arn = list(client.get_paginator('list_exports').paginate().search(f"Exports[? ExportName=='{old_export_name}']"))[0]['ExportArn']
+                  if old_export['Name'] != old_export['Name']:
                       res = client.create_export(Export=export)
                       print('created:', json.dumps(res))
                       try:
-                          res = client.delete_export(Name=old_export_name)
+                          res = client.delete_export(ExportArn=old_export_arn)
                           print('deleted:', json.dumps(res))
-                      except:
-                          pass # Do not block deletion
+                      except Exception as exc:
+                          print('Exception on deletion:', str(exc))
+                  elif export['DataQuery'] != old_export['DataQuery']: # Data export do not support update of queries
+                      print(export['DataQuery'], '!=', old_export['DataQuery'])
+                      res = client.delete_export(ExportArn=old_export_arn)
+                      print('deleted:', json.dumps(res))
+                      res = client.create_export(Export=export)
+                      print('created:', json.dumps(res))
                   else:
-                      res = client.update_export(Name=old_export_name, Export=export)
+                      res = client.update_export(ExportArn=old_export_arn, Export=export)
                       print('updated:', json.dumps(res))
               elif event['RequestType'] == 'Delete':
+                  export_name = export['Name']
                   try:
-                      res = client.delete_export(Name=old_export_name)
+                      export_arn = list(client.get_paginator('list_exports').paginate().search(f"Exports[? ExportName=='{export_name}']"))[0]['ExportArn']
+                      res = client.delete_export(ExportArn=export_arn)
                       print('deleted:', json.dumps(res))
+                  except client.exceptions.ResourceNotFoundException:
+                      print('Not Found. Nothing to delete')
                   except:
-                      pass # Do not block deletion
+                      print('Exception on deletion:', str(exc))
               else:
                   raise Exception("Unknown operation: " + event['RequestType'])
 
