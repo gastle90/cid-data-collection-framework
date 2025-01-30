@@ -331,6 +331,9 @@ Resources:
             Status: Enabled
             NoncurrentVersionExpirationInDays: 32 # 1 month
             ExpirationInDays: 64 # 2 months
+      Tags: # Hacky way to manage conditional dependencies
+        - Key: IgnoreConditionalDependency
+          Value: !If [IsDestinationAccount, !Ref DestinationS3, '']
     Metadata:
       cfn_nag:
         rules_to_suppress:
