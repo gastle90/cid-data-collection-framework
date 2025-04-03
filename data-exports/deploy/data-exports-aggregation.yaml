@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: AWS Billing Data Export Aggregation v0.3.0
+Description: AWS Billing Data Export Aggregation v0.3.1
 Metadata:
 
   AWS::CloudFormation::Interface:
@@ -331,28 +331,44 @@ Resources:
               Bucket: !Sub "arn:${AWS::Partition}:s3:::${ResourcePrefix}-${DestinationAccountId}-data-exports"
               StorageClass: STANDARD
             Id: ReplicateCUR2Data
-            Prefix: !Sub "cur2/${AWS::AccountId}/${ResourcePrefix}-cur2/data/"  # Hardcoded export name
+            Filter:
+              Prefix: !Sub "cur2/${AWS::AccountId}/${ResourcePrefix}-cur2/data/"  # Hardcoded export name
             Status: Enabled
+            Priority: 1
+            DeleteMarkerReplication:
+              Status: Enabled
           - Destination:
               Bucket: !Sub "arn:${AWS::Partition}:s3:::${ResourcePrefix}-${DestinationAccountId}-data-exports"
               StorageClass: STANDARD
             Id: ReplicateFOCUSData
-            Prefix: !Sub "focus/${AWS::AccountId}/${ResourcePrefix}-focus/data/" # Hardcoded export name
+            Filter:
+              Prefix: !Sub "focus/${AWS::AccountId}/${ResourcePrefix}-focus/data/" # Hardcoded export name
             Status: Enabled
+            Priority: 2
+            DeleteMarkerReplication:
+              Status: Enabled
           - Destination:
               Bucket: !Sub "arn:${AWS::Partition}:s3:::${ResourcePrefix}-${DestinationAccountId}-data-exports"
               StorageClass: STANDARD
             Id: ReplicateCOHData
-            Prefix: !Sub "coh/${AWS::AccountId}/${ResourcePrefix}-coh/data/" # Hardcoded export name
+            Filter:
+              Prefix: !Sub "coh/${AWS::AccountId}/${ResourcePrefix}-coh/data/" # Hardcoded export name
             Status: Enabled
+            Priority: 3
+            DeleteMarkerReplication:
+              Status: Enabled
           - Fn::If:
             - NonEmptySecondaryDestinationBucket
             - Destination:
                 Bucket: !Sub "arn:${AWS::Partition}:s3:::${SecondaryDestinationBucket}"
                 StorageClass: STANDARD
               Id: ReplicateCUR2DataToSecondaryBucket
-              Prefix: !Sub "cur2/${AWS::AccountId}/${ResourcePrefix}-cur2/data/"  # Hardcoded export name
+              Filter:
+                Prefix: !Sub "cur2/${AWS::AccountId}/${ResourcePrefix}-cur2/data/"  # Hardcoded export name
               Status: Enabled
+              Priority: 101
+              DeleteMarkerReplication:
+                Status: Enabled
             - !Ref 'AWS::NoValue'
           - Fn::If:
             - NonEmptySecondaryDestinationBucket
@@ -360,8 +376,12 @@ Resources:
                 Bucket: !Sub "arn:${AWS::Partition}:s3:::${SecondaryDestinationBucket}"
                 StorageClass: STANDARD
               Id: ReplicateFOCUSDataToSecondaryBucket
-              Prefix: !Sub "focus/${AWS::AccountId}/${ResourcePrefix}-focus/data/" # Hardcoded export name
+              Filter:
+                Prefix: !Sub "focus/${AWS::AccountId}/${ResourcePrefix}-focus/data/" # Hardcoded export name
               Status: Enabled
+              Priority: 102
+              DeleteMarkerReplication:
+                Status: Enabled
             - !Ref 'AWS::NoValue'
           - Fn::If:
             - NonEmptySecondaryDestinationBucket
@@ -369,8 +389,12 @@ Resources:
                 Bucket: !Sub "arn:${AWS::Partition}:s3:::${SecondaryDestinationBucket}"
                 StorageClass: STANDARD
               Id: ReplicateCOHDataToSecondaryBucket
-              Prefix: !Sub "coh/${AWS::AccountId}/${ResourcePrefix}-coh/data/" # Hardcoded export name
+              Filter:
+                Prefix: !Sub "coh/${AWS::AccountId}/${ResourcePrefix}-coh/data/" # Hardcoded export name
               Status: Enabled
+              Priority: 103
+              DeleteMarkerReplication:
+                Status: Enabled
             - !Ref 'AWS::NoValue'
       LifecycleConfiguration:
         Rules:
