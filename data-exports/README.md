@@ -48,7 +48,7 @@ For customers with additional requirements, an enhanced architecture is availabl
 8. Some customers might need to store data exports to secondary destinations for archiving or reporting at a higher organizational level or to staging environment. You can specify a secondary bucket to receive the data in these cases.
 
 ### Using Secondary Replication Bucket
-In situations where customers need to replicate data exports to multiple destinations. One common scenario involves a Business Unit requiring exports for one or more AWS Organizations data while simultaneously allowing Headquarters to access these same exports data for a consolidated view across all business units. 
+There can be various situations where customers need to replicate data exports to multiple destinations. One common scenario involves a Business Unit requiring exports for one or more AWS Organizations data while simultaneously allowing Headquarters to access these same exports data for a consolidated view across all business units. 
 
 To accomplish this, both the Headquarters and Business Unit can implement separate data export destination stacks. Business Unit administrators, working from their management account, can specify a target bucket located within the Headquarters stack, enabling seamless data replication to both locations. 
 
