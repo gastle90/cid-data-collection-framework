@@ -54,7 +54,7 @@ To accomplish this, both the Headquarters and Business Unit can implement separa
 
 Other scenario can be a replicating data to a staging environment. 
 
-![Secondary Replication Bucket](.images/architecture-data-export-replication-to-secondary.png)
+![Secondary Replication Bucket](/.images/architecture-data-export-replication-to-secondary.png)
 
 ## Legacy Cost and Usage Report
 Legacy AWS Cost and Usage Reports (Legacy CUR) can still be used for Cloud Intelligence Dashboards and other use cases.
