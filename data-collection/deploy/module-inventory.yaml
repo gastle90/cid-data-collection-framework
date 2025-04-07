@@ -1346,7 +1346,7 @@ Resources:
                     service='ec2',
                     function_name='describe_network_interfaces',
                     obj_name='NetworkInterfaces[*]'
-                  )
+                  ),
               }
 
               account = json.loads(event["account"])
