@@ -229,6 +229,7 @@ Resources:
               - "ec2:DescribeRegions"
               - "ec2:DescribeInstances"
               - "ec2:DescribeVpcs"
+              - "ec2:DescribeNetworkInterfaces"
               - "rds:DescribeDBClusters"
               - "rds:DescribeDBInstances"
               - "rds:DescribeDBSnapshots"
