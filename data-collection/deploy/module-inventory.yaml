@@ -56,17 +56,13 @@ Parameters:
     Description: ARN of a Lambda for Managing GlueTable
   AwsObjects:
     Type: CommaDelimitedList
-<<<<<<< HEAD
-    Default: OpensearchDomains, ElasticacheClusters, RdsDbInstances, EBS, AMI, Snapshot, Ec2Instances, VpcInstances, RdsDbSnapshots, EKSClusters, LambdaFunctions, RdsDbClusters, NetworkInterfaces
-=======
-    Default: OpensearchDomains, ElasticacheClusters, RdsDbInstances, EBS, AMI, Snapshot, Ec2Instances, VpcInstances, RdsDbSnapshots, EKSClusters, LambdaFunctions, RdsDbClusters, WorkSpaces
->>>>>>> d59c667c7b0e74b9d8f9f4c84f833a4f634ed4e0
+    Default: OpensearchDomains, ElasticacheClusters, RdsDbInstances, EBS, AMI, Snapshot, Ec2Instances, VpcInstances, RdsDbSnapshots, EKSClusters, LambdaFunctions, RdsDbClusters, WorkSpaces, NetworkInterfaces
     Description: Services for pulling price data
   DataBucketsKmsKeysArns:
     Type: String
     Description: "ARNs of KMS Keys for data buckets and/or Glue Catalog. Comma separated list, no spaces. Keep empty if data Buckets and Glue Catalog are not Encrypted with KMS. You can also set it to '*' to grant decrypt permission for all the keys."
     Default: ""
-
+    
 Conditions:
   NeedDataBucketsKms: !Not [ !Equals [ !Ref DataBucketsKmsKeysArns, "" ] ]
 
@@ -1492,16 +1488,13 @@ Resources:
                     obj_name='Functions[*]'
                   ),
                   'eks': eks_clusters_scan,
-<<<<<<< HEAD
+                  'workspaces': workspaces_scan
                   'network-interfaces': partial(
                     paginated_scan,
                     service='ec2',
                     function_name='describe_network_interfaces',
                     obj_name='NetworkInterfaces[*]'
                   )
-=======
-                  'workspaces': workspaces_scan
->>>>>>> d59c667c7b0e74b9d8f9f4c84f833a4f634ed4e0
               }
               account = json.loads(event["account"])
               account_id = account["account_id"]

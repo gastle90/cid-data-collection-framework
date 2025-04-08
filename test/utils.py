@@ -369,11 +369,8 @@ def trigger_update(account_id):
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}inventory-VpcInstances-StateMachine',
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}inventory-RdsDbSnapshots-StateMachine',
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}inventory-LambdaFunctions-StateMachine',
-<<<<<<< HEAD
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}inventory-NetworkInterfaces-StateMachine',
-=======
-        f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}inventory-WorkSpaces-StateMachine',       
->>>>>>> d59c667c7b0e74b9d8f9f4c84f833a4f634ed4e0
+        f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}inventory-WorkSpaces-StateMachine',
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}rds-usage-StateMachine',
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}transit-gateway-StateMachine',
         f'arn:{partition}:states:{region}:{account_id}:stateMachine:{PREFIX}trusted-advisor-StateMachine',

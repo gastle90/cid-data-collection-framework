@@ -261,14 +261,8 @@ Resources:
               - "ec2:DescribeSnapshots"
               - "ec2:DescribeInstances"
               - "ec2:DescribeVpcs"
-<<<<<<< HEAD
-              - "ec2:DescribeNetworkInterfaces"
-              - "rds:DescribeDBClusters"
-              - "rds:DescribeDBInstances"
-              - "rds:DescribeDBSnapshots"
-=======
               - "ec2:DescribeRegions"
->>>>>>> d59c667c7b0e74b9d8f9f4c84f833a4f634ed4e0
+              - "ec2:DescribeNetworkInterfaces"
               - "es:ListDomainNames"
               - "eks:ListClusters"
               - "eks:ListNodegroups"
