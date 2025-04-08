@@ -126,7 +126,6 @@ Resources:
                   - s3:DeleteBucket
                   - s3:ListBucket
                   - s3:Put*
-                  - s3:Set*
                   - s3:Get*
                   - s3:Replicate*
                   - s3:DeleteBucketPolicy
@@ -330,7 +329,6 @@ Resources:
                     Status: Enabled
                     NoncurrentVersionExpiration:
                       NoncurrentDays: 1
-                      NewerNoncurrentVersions: 1
       Tags: # Hacky way to manage dependencies
         - Key: IgnoreMeIamOnlyWorkaround
           Value: !GetAtt StackSetExecutionRole.Arn
