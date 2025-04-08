@@ -1488,7 +1488,7 @@ Resources:
                     obj_name='Functions[*]'
                   ),
                   'eks': eks_clusters_scan,
-                  'workspaces': workspaces_scan
+                  'workspaces': workspaces_scan,
                   'network-interfaces': partial(
                     paginated_scan,
                     service='ec2',
