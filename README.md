@@ -1,4 +1,4 @@
-## CID Data Collection Framework
+## Cloud Intelligence Dashboaeds - Data Collection
 
 ## Table of Contents
 1. [Overview](#Overview)
