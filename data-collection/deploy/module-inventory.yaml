@@ -1025,6 +1025,7 @@ Mappings:
           TableType: EXTERNAL_TABLE
     NetworkInterfaces:
       path: network-interfaces
+      collection: LINKED
       table:
         - Name: inventory_network_interfaces_data
           Parameters: { "classification" : "json", "compressionType": "none" }
